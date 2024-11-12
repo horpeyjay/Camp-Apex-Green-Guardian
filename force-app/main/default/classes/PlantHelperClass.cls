@@ -157,4 +157,40 @@ public with sharing class PlantHelperClass {
             update gardenToUpdate;
         }
     }
+
+    public static void permanentClosure(List<CAMPX__Plant__c> plantList, Map<Id, CAMPX__Plant__c> plantMap) {
+        Set<Id> gardenIds = new Set<Id>();
+    
+        for (CAMPX__Plant__c cp : plantList) {
+            // Check if plantMap contains a previous version (only for updates)
+            CAMPX__Plant__c oldPlant = (plantMap != null && plantMap.containsKey(cp.Id)) ? plantMap.get(cp.Id) : null;
+    
+            // Collect garden IDs only when there's a new garden on insert or a garden change on update
+            if (oldPlant == null || cp.CAMPX__Garden__c != oldPlant.CAMPX__Garden__c) {
+                gardenIds.add(cp.CAMPX__Garden__c);
+            }
+        }
+    
+        if (!gardenIds.isEmpty()) {
+            // Query gardens that are permanently closed
+            List<CAMPX__Garden__c> closedGardens = [
+                SELECT Id FROM CAMPX__Garden__c 
+                WHERE Id IN :gardenIds AND CAMPX__Status__c = 'Permanent Closure'
+            ];
+    
+            // Convert closed gardens to a set for quick lookup
+            Set<Id> closedGardenIds = new Set<Id>();
+            for (CAMPX__Garden__c g : closedGardens) {
+                closedGardenIds.add(g.Id);
+            }
+    
+            // Add error to plants referencing closed gardens
+            for (CAMPX__Plant__c cp : plantList) {
+                if (closedGardenIds.contains(cp.CAMPX__Garden__c)) {
+                    cp.addError('The garden selected for this plant is permanently closed. Please select a different garden.');
+                }
+            }
+        }
+    }
+    
 }    

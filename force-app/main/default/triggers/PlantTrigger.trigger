@@ -2,10 +2,11 @@ trigger PlantTrigger on CAMPX__Plant__c (before insert, before update, after ins
     if(trigger.isBefore){
         if(trigger.isInsert){
             PlantHelperClass.plantDefaultValues(trigger.new);
+            PlantHelperClass.permanentClosure(trigger.new, null);
         }
 
         if(trigger.isUpdate){
-
+            PlantHelperClass.permanentClosure(trigger.new, trigger.oldMap);
         }
     }
 
@@ -13,6 +14,7 @@ trigger PlantTrigger on CAMPX__Plant__c (before insert, before update, after ins
         if(trigger.isInsert || trigger.isUndelete){
             PlantHelperClass.updateTotalPlantCount(trigger.new, null);
             PlantHelperClass.unhealthyPlantCount(trigger.new, null);
+            
         }
 
         if(trigger.isUpdate){
