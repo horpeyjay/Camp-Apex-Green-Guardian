@@ -2,11 +2,12 @@ trigger GardenTrigger on CAMPX__Garden__c (before insert, before update, after i
     if(trigger.isBefore){
         if(trigger.isInsert){
             GardenHelperClass.defaultValues(trigger.new);
+            GardenHelperClass.setManagerDate(trigger.new);
             
         }
 
         if(trigger.isUpdate){
-
+            GardenHelperClass.setManagerDate(trigger.new);
         }
     }
 

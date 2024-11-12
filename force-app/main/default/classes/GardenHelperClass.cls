@@ -116,4 +116,23 @@ public with sharing class GardenHelperClass {
             }
         }
     }
+
+    /**
+     * The "Manager Start Date" (CAMPX__Manager_Start_Date__c) should be set in the following scenarios:
+        When a manager is assigned, the field must be set with the current date
+        When a manager is unassigned and no replacement is named, the field must be cleared
+    */
+
+    public static void setManagerDate(List<CAMPX__Garden__c> newList){
+
+        if(!newList.isEmpty()){
+            for(CAMPX__Garden__c g : newList){
+                if(g.CAMPX__Manager__c != null){
+                    g.CAMPX__Manager_Start_Date__c = System.today();
+                }else{
+                    g.CAMPX__Manager_Start_Date__c = null;
+                }
+            }
+        }
+    }
 }
