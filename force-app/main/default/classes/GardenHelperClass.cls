@@ -171,4 +171,28 @@ The field should be 0 if the "Total Plant Count" is zero or blank
             }
         }
     }
+
+    public static void gardenStatus(List<CAMPX__Garden__c> newList){
+
+        if(!newList.isEmpty()){
+            for(CAMPX__Garden__c cg : newList){
+                if(cg.CAMPX__Status__c != 'Permanent Closure'){
+
+                
+                    if(cg.CAMPX__Capacity__c == 0){
+                        cg.CAMPX__Status__c = 'Temporary Closure';
+                    }else if(cg.CAMPX__Capacity__c >= 70 && cg.CAMPX__Capacity__c <= 100 && cg.CAMPX__Total_Plant_Count__c >= cg.CAMPX__Minimum_Plant_Count__c && cg.CAMPX__Health_Index__c >= 70){
+                        cg.CAMPX__Status__c = 'Operational';
+                    }else if((cg.CAMPX__Capacity__c > 0 && cg.CAMPX__Capacity__c < 70) || cg.CAMPX__Health_Index__c < 70 || (cg.CAMPX__Minimum_Plant_Count__c > cg.CAMPX__Total_Plant_Count__c)){
+                        //(70 > Capacity > 0) OR (70 > Health Index) OR (Minimum Plant Count > Total Plant Count)
+                        cg.CAMPX__Status__c = 'Awaiting Resources';
+                    }else if(cg.CAMPX__Capacity__c > 100){
+                        cg.CAMPX__Status__c = 'Over Capacity';
+                    }
+                }
+            }
+        }
+    }
+
+    
 }

@@ -5,12 +5,14 @@ trigger GardenTrigger on CAMPX__Garden__c (before insert, before update, before 
             GardenHelperClass.setManagerDate(trigger.new);
             GardenHelperClass.capacityCalculation(trigger.new);
             GardenHelperClass.healthIndex(trigger.new);
+            GardenHelperClass.gardenStatus(trigger.new);
         }
 
         if(trigger.isUpdate){
             GardenHelperClass.setManagerDate(trigger.new);
             GardenHelperClass.capacityCalculation(trigger.new);
             GardenHelperClass.healthIndex(trigger.new);
+            GardenHelperClass.gardenStatus(trigger.new);
         }
     }
 
