@@ -6,6 +6,7 @@ trigger GardenTrigger on CAMPX__Garden__c (before insert, before update, before 
             GardenHelperClass.capacityCalculation(trigger.new);
             GardenHelperClass.healthIndex(trigger.new);
             GardenHelperClass.gardenStatus(trigger.new);
+            GardenHelperClass.nonNegativeValues(trigger.new);
         }
 
         if(trigger.isUpdate){
@@ -13,6 +14,7 @@ trigger GardenTrigger on CAMPX__Garden__c (before insert, before update, before 
             GardenHelperClass.capacityCalculation(trigger.new);
             GardenHelperClass.healthIndex(trigger.new);
             GardenHelperClass.gardenStatus(trigger.new);
+            GardenHelperClass.nonNegativeValues(trigger.new);
         }
     }
 

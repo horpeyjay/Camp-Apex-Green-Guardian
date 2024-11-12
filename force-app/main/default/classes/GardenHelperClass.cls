@@ -194,5 +194,17 @@ The field should be 0 if the "Total Plant Count" is zero or blank
         }
     }
 
-    
+    /**
+     * Maximum Plant Count, Minimum Plant Count, Total Plant Count, and Total Unhealthy Plant Count must always be non-negative. Attempting to enter a negative value should prompt an error message: 
+     * "Plant Count fields must be greater than or equal to zero." 
+     */
+    public static void nonNegativeValues(List<CAMPX__Garden__c> gardenList){
+        if(!gardenList.isEmpty()){
+            for(CAMPX__Garden__c cg : gardenList){
+                if(cg.CAMPX__Total_Unhealthy_Plant_Count__c < 0 || cg.CAMPX__Max_Plant_Count__c < 0 || cg.CAMPX__Minimum_Plant_Count__c < 0 || cg.CAMPX__Total_Plant_Count__c < 0){
+                    cg.addError('Plant Count fields must be greater than or equal to zero.');
+                }
+            }
+        }
+    }
 }
