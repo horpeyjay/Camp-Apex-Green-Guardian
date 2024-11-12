@@ -64,33 +64,16 @@ public with sharing class PlantHelperClass {
             }
         }
         Map<Id, Integer> countPlantMap = new Map<Id, Integer>();
+        Map<Id, Decimal> maxPlantCountMap = new Map<Id, Decimal>();
         if(gardenIds.size() > 0){
-            /*List<CAMPX__Plant__c> relatedPlantList = [Select Id, CAMPX__Garden__c From CAMPX__Plant__c where CAMPX__Garden__c In : gardenIds];
-
-            List<CAMPX__Garden__c> gardenList = [Select Id, CAMPX__Total_Plant_Count__c From CAMPX__Garden__c where Id In : gardenIds];
-
-            for(CAMPX__Garden__c cg : gardenList){
-
-                for(CAMPX__Plant__c cp : relatedPlantList){
-                    if(cp.CAMPX__Garden__c == null){
-                        countPlantMap.put(cg.Id, 0);
-                    }
-                    if(cg.Id == cp.CAMPX__Garden__c){
-                        if(countPlantMap.containsKey(cg.Id)){
-                            countPlantMap.put(cg.Id, countPlantMap.get(cg.Id) + 1);
-                        }else{
-                            countPlantMap.put(cg.Id, 1);
-                        }
-                    }
-                } 
-            }*/
 
             // Query for the gardens by ID
-            List<CAMPX__Garden__c> gardenList = [SELECT Id, CAMPX__Total_Plant_Count__c FROM CAMPX__Garden__c WHERE Id IN :gardenIds];
+            List<CAMPX__Garden__c> gardenList = [SELECT Id, CAMPX__Total_Plant_Count__c, CAMPX__Max_Plant_Count__c FROM CAMPX__Garden__c WHERE Id IN :gardenIds];
 
             // Initialize each garden in the map with a count of 0
             for (CAMPX__Garden__c cg : gardenList) {
                 countPlantMap.put(cg.Id, 0);
+                maxPlantCountMap.put(cg.Id, cg.CAMPX__Max_Plant_Count__c);
             }
 
             // Query for plants associated with the specified garden IDs
@@ -106,9 +89,16 @@ public with sharing class PlantHelperClass {
         List<CAMPX__Garden__c> gardenToUpdate = new List<CAMPX__Garden__c>();
         if(countPlantMap != null && countPlantMap.size() > 0){
             for(Id gardenId : countPlantMap.keySet()){
+                
                 CAMPX__Garden__c singleGarden = new CAMPX__Garden__c();
                 singleGarden.Id = gardenId;
                 singleGarden.CAMPX__Total_Plant_Count__c = countPlantMap.get(gardenId);
+                Decimal maxPlant = maxPlantCountMap.get(gardenId);
+
+                Decimal capacity = (singleGarden.CAMPX__Total_Plant_Count__c / maxPlant) * 100;
+                if(capacity <= 100){
+                    singleGarden.CAMPX__Capacity__c = capacity;
+                }
                 gardenToUpdate.add(singleGarden);
             }
         }
@@ -117,4 +107,6 @@ public with sharing class PlantHelperClass {
             update gardenToUpdate;
         }
     }
+
+
 }    

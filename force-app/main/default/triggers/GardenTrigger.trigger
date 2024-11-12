@@ -1,13 +1,14 @@
-trigger GardenTrigger on CAMPX__Garden__c (before insert, before update, after insert, after update) {
+trigger GardenTrigger on CAMPX__Garden__c (before insert, before update, before delete, after insert, after update) {
     if(trigger.isBefore){
-        if(trigger.isInsert){
+        if(trigger.isInsert || trigger.isUndelete){
             GardenHelperClass.defaultValues(trigger.new);
             GardenHelperClass.setManagerDate(trigger.new);
-            
+            GardenHelperClass.capacityCalculation(trigger.new);
         }
 
         if(trigger.isUpdate){
             GardenHelperClass.setManagerDate(trigger.new);
+            GardenHelperClass.capacityCalculation(trigger.new);
         }
     }
 

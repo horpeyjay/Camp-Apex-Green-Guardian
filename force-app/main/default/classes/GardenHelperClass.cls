@@ -135,4 +135,26 @@ public with sharing class GardenHelperClass {
             }
         }
     }
+
+    public static void capacityCalculation(List<CAMPX__Garden__c> newList){
+        if(!newList.isEmpty()){
+            for(CAMPX__Garden__c cg : newList){
+                try{
+                    if (cg.CAMPX__Total_Plant_Count__c == null || cg.CAMPX__Total_Plant_Count__c == 0) {
+                        // If Total_Plant_Count__c is null or 0, set Capacity to 0
+                        cg.CAMPX__Capacity__c = 0;
+                    } else if (cg.CAMPX__Max_Plant_Count__c != null && cg.CAMPX__Max_Plant_Count__c > 0) {
+                        // Calculate Capacity when both fields have valid values
+                        cg.CAMPX__Capacity__c = (cg.CAMPX__Total_Plant_Count__c / cg.CAMPX__Max_Plant_Count__c) * 100;
+                    } else if (cg.CAMPX__Max_Plant_Count__c == 0 || cg.CAMPX__Max_Plant_Count__c == null) {
+                        // Handle case where Max_Plant_Count__c is null or zero
+                        cg.CAMPX__Capacity__c = 0;
+                    }
+                } catch (Exception ex) {
+                    System.debug('Error: ' + ex.getMessage());
+                }
+            }
+        }
+    }
+    
 }
