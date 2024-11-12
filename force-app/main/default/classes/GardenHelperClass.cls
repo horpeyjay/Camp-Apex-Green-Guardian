@@ -66,7 +66,7 @@ public with sharing class GardenHelperClass {
         if(!gList.isEmpty()){
             for(CAMPX__Garden__c g : gList){
                 CAMPX__Garden__c oldG = gMap.get(g.Id);
-                if(oldG.CAMPX__Manager__c != g.CAMPX__Manager__c){
+                if(oldG.CAMPX__Manager__c != g.CAMPX__Manager__c && g.CAMPX__Manager__c != null){
                     prevToNewManagerMap.put(oldG.CAMPX__Manager__c, g.CAMPX__Manager__c);
                     recordIds.add(g.Id);
                 }
