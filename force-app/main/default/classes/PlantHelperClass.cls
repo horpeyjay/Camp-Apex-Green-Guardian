@@ -108,5 +108,53 @@ public with sharing class PlantHelperClass {
         }
     }
 
+    public static void unhealthyPlantCount(List<CAMPX__Plant__c> unhealthyPlants, Map<Id, CAMPX__Plant__c> oldPlantMap){
+        Set<Id> gardenIds = new Set<Id>();
 
+        if(!unhealthyPlants.isEmpty()){
+            for(CAMPX__Plant__c cp : unhealthyPlants){
+                if(oldPlantMap != null){
+                    CAMPX__Plant__c oldPlant = oldPlantMap.get(cp.Id);
+                    if(cp.Id != null && oldPlant.CAMPX__Garden__c != cp.CAMPX__Garden__c){
+                        gardenIds.add(oldPlant.CAMPX__Garden__c);
+                        gardenIds.add(cp.CAMPX__Garden__c);
+                    }else{
+                        gardenIds.add(cp.CAMPX__Garden__c);
+                    }
+                }else{
+                    gardenIds.add(cp.CAMPX__Garden__c);
+                }
+            }
+        }
+        Map<Id, Integer> unhealthyPlantMap = new Map<Id, Integer>();
+        if(!gardenIds.isEmpty()){
+
+            List<CAMPX__Garden__c> gardenList = [Select Id, CAMPX__Total_Unhealthy_Plant_Count__c From CAMPX__Garden__c where Id in : gardenIds];
+
+            for(CAMPX__Garden__c cg : gardenList){
+                unhealthyPlantMap.put(cg.Id, 0);
+            }
+
+            List<CAMPX__Plant__c> plantList = [Select Id, CAMPX__Garden__c, CAMPX__Status__c From CAMPX__Plant__c where CAMPX__Garden__c in : gardenIds And CAMPX__Status__c in ('Sick', 'Deceased', 'Wilting')];
+
+            for(CAMPX__Plant__c cp : plantList){
+                if(unhealthyPlantMap.containsKey(cp.CAMPX__Garden__c)){
+                    unhealthyPlantMap.put(cp.CAMPX__Garden__c, unhealthyPlantMap.get(cp.CAMPX__Garden__c)+ 1);
+                }
+            }
+        }
+        List<CAMPX__Garden__c> gardenToUpdate = new List<CAMPX__Garden__c>();
+        if(unhealthyPlantMap != null && unhealthyPlantMap.size() > 0){
+            for(Id gardenId : unhealthyPlantMap.keySet()){
+                CAMPX__Garden__c singleGarden = new CAMPX__Garden__c();
+                singleGarden.Id = gardenId;
+                singleGarden.CAMPX__Total_Unhealthy_Plant_Count__c = unhealthyPlantMap.get(gardenId);
+                gardenToUpdate.add(singleGarden);
+            }
+        }
+
+        if(gardenToUpdate.size() > 0){
+            update gardenToUpdate;
+        }
+    }
 }    
