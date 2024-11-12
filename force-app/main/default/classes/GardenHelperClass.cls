@@ -211,6 +211,11 @@ The field should be 0 if the "Total Plant Count" is zero or blank
                     }
                 }
 
+                if(cg.CAMPX__Minimum_Plant_Count__c != null || cg.CAMPX__Max_Plant_Count__c != null){
+                    if(cg.CAMPX__Minimum_Plant_Count__c > cg.CAMPX__Max_Plant_Count__c){
+                        cg.addError('The Maximum Plant Count must be greater than or equal to the Minimum Plant Count');
+                    }
+                }
                 
             }
         }
