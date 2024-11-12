@@ -204,6 +204,14 @@ The field should be 0 if the "Total Plant Count" is zero or blank
                 if(cg.CAMPX__Total_Unhealthy_Plant_Count__c < 0 || cg.CAMPX__Max_Plant_Count__c < 0 || cg.CAMPX__Minimum_Plant_Count__c < 0 || cg.CAMPX__Total_Plant_Count__c < 0){
                     cg.addError('Plant Count fields must be greater than or equal to zero.');
                 }
+
+                if(cg.CAMPX__Total_Plant_Count__c > 0){
+                    if(cg.CAMPX__Minimum_Plant_Count__c == null || cg.CAMPX__Max_Plant_Count__c == null){
+                        cg.addError('Maximum and Minimum Plant Count fields cannot be blank when there are plants in the Garden.');
+                    }
+                }
+
+                
             }
         }
     }
