@@ -156,5 +156,19 @@ public with sharing class GardenHelperClass {
             }
         }
     }
-    
+    /**
+     * The garden's "Health Index" (CAMPX__Health_Index__c) field should be set based on this formula: ((Total Plant Count - Total Unhealthy Plant Count)/Total Plant Count) * 100
+The field must be recalculated and updated when there is a change in either the "Total Plant Count" or "Total Unhealthy Plant Count"
+The field should be 0 if the "Total Plant Count" is zero or blank
+     * 
+     */
+    public static void healthIndex(List<CAMPX__Garden__c> newList){
+        for(CAMPX__Garden__c g : newList){
+            if(g.CAMPX__Total_Plant_Count__c == null || g.CAMPX__Total_Plant_Count__c  == 0){
+                g.CAMPX__Health_Index__c = 0;
+            }else if(g.CAMPX__Total_Plant_Count__c > 0){
+                g.CAMPX__Health_Index__c = ((g.CAMPX__Total_Plant_Count__c - g.CAMPX__Total_Unhealthy_Plant_Count__c)/g.CAMPX__Total_Plant_Count__c)*100;
+            }
+        }
+    }
 }
