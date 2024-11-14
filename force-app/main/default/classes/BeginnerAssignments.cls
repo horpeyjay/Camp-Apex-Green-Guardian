@@ -34,4 +34,26 @@ public with sharing class BeginnerAssignments {
         String companyAddress = '\n\t\"Worldwide Corporate Headquarter\" \n\t Salesforce, Inc., \'Salesforce Tower\', \n\t 415 Mission Street, 3rd Floor \n\t San Francisco, CA 94105';
         System.debug('The company address is =>' + companyAddress);
     }
+
+    /**
+     * Write a class in Apex and accept the radius of a circle as the method parameter of
+the method in a class and calculate the circumference and area of a circle.
+[Hint:
+1. The formula for the calculation
+Area of circle = PI * (R)2
+Circumference of Circle = 2 * PI * R
+2. Use 3.14 as the value of PI.
+3. Use constant to store the value of PI.
+
+     */
+
+    public static List<Decimal> calculateAreaOfCircle (Integer radius){
+        final Decimal PI = 3.14;
+        Decimal area = PI * (radius * radius);
+        area = area.setScale(2);
+        Decimal circumference = 2 * PI * radius;
+        circumference = circumference.setScale(2);
+        List<Decimal> returnValues = new List<Decimal>{area, circumference};
+        return returnValues;
+    }
 }
