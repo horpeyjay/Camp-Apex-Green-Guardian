@@ -13,4 +13,11 @@ public with sharing class BeginnerAssignments {
         system.debug('The simple interest is => ' + simpleInterest);
         system.debug('The total amount with interest is => ' + totalAmountWithInterest);
     }
+
+    /**Write a class in Apex to create a Date variable with today’s date and print the date
+    after 100 days from today. */
+    public static void days100FromToday(){
+        Date finalDate = Date.today() + 100;
+        System.debug('Added 100 days to today\'s date =>' + finalDate);
+    }
 }
