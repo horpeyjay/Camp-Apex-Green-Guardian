@@ -22,7 +22,38 @@ public with sharing class OpportunityHandlerClass {
 
         if(!oppsToInsert.isEmpty()){
             insert oppsToInsert;
-        
+        }
+    }
+
+    public static void defaultOppName(List<Opportunity> oppList){
+        Set<Id> accIds = new Set<Id>();
+        if(!oppList.isEmpty()){
+            String oppName;
+            
+            for(Opportunity opp : oppList){
+                if(opp.CloseDate != null && opp.AccountId != null){
+                    Integer closeYear = opp.CloseDate.year();
+                    oppName = String.valueOf(closeYear);
+                    accIds.add(opp.AccountId);
+                }
+            }
+        }
+
+        if (!accIds.isEmpty()) {
+            // Fetch Account details and store them in a map
+            Map<Id, Account> accMap = new Map<Id, Account>([SELECT Id, Name FROM Account WHERE Id IN :accIds]);
+
+            for (Opportunity opp : oppList) {
+                if (opp.CloseDate != null && opp.AccountId != null) {
+                    // Generate the name based on the account and close year
+                    Integer closeYear = opp.CloseDate.year();
+                    Account acc = accMap.get(opp.AccountId);
+                    
+                    if (acc != null) {
+                        opp.Name = String.valueOf(closeYear) + ' ' + acc.Name + ' Opportunity';
+                    }
+                }
+            }
         }
     }
 }
