@@ -5,8 +5,8 @@ public with sharing class BeginnerAssignments {
         statement.
 
      */
-    public static void simpleInterestCalculator(Integer principal, Decimal rate, Integer time) {
-        Decimal simpleInterest = (principal * rate * time) / 100;
+    public static void simpleInterestCalculator(Integer principal, Decimal rate, Integer duration) {
+        Decimal simpleInterest = (principal * rate * duration) / 100;
         simpleInterest = simpleInterest.setScale(2);
         Decimal totalAmountWithInterest = principal + simpleInterest;
         totalAmountWithInterest = totalAmountWithInterest.setScale(2);
