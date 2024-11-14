@@ -20,4 +20,18 @@ public with sharing class BeginnerAssignments {
         Date finalDate = Date.today() + 100;
         System.debug('Added 100 days to today\'s date =>' + finalDate);
     }
+
+    /**
+     * Write a class in Apex and print the following message using only one debug
+        statement.
+        “Worldwide Corporate Headquarters”
+        Salesforce, Inc., ‘Salesforce Tower’,
+        415 Mission Street, 3rd Floor
+        San Francisco, CA 94105
+
+     */
+    public static void complexString(){
+        String companyAddress = '\n\t\"Worldwide Corporate Headquarter\" \n\t Salesforce, Inc., \'Salesforce Tower\', \n\t 415 Mission Street, 3rd Floor \n\t San Francisco, CA 94105';
+        System.debug('The company address is =>' + companyAddress);
+    }
 }
