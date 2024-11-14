@@ -56,4 +56,62 @@ Circumference of Circle = 2 * PI * R
         List<Decimal> returnValues = new List<Decimal>{area, circumference};
         return returnValues;
     }
+
+    /**
+     * Write a class in Apex with an Enum for holding months of a year. Create a
+method in the same class that accepts the Enum type as a parameter and print the month
+passed. Create different variables of this Enum and pass them to this method.
+
+     */
+    public enum Months {JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC}
+
+
+    public static void enumMethod() {
+        // Assigning each month and debugging it
+        Months One = Months.JAN;
+        System.debug('Month One: ' + One);
+        
+        Months Two = Months.FEB;
+        System.debug('Month Two: ' + Two);
+        
+        Months Three = Months.MAR;
+        System.debug('Month Three: ' + Three);
+        
+        Months Four = Months.APR;
+        System.debug('Month Four: ' + Four);
+        
+        Months Five = Months.MAY;
+        System.debug('Month Five: ' + Five);
+        
+        Months Six = Months.JUN;
+        System.debug('Month Six: ' + Six);
+        
+        Months Seven = Months.JUL;
+        System.debug('Month Seven: ' + Seven);
+        
+        Months Eight = Months.AUG;
+        System.debug('Month Eight: ' + Eight);
+        
+        Months Nine = Months.SEP;
+        System.debug('Month Nine: ' + Nine);
+        
+        Months Ten = Months.OCT;
+        System.debug('Month Ten: ' + Ten);
+        
+        Months Eleven = Months.NOV;
+        System.debug('Month Eleven: ' + Eleven);
+        
+        Months Twelve = Months.DEC;
+        System.debug('Month Twelve: ' + Twelve);
+
+        
+    }
+
+    public static void showMonths(Months monthInWords) {
+        // Calls enumMethod to display all months
+        enumMethod();
+        
+        // Display the specific month passed to showMonths
+        System.debug('Selected Month: ' + monthInWords);
+    }
 }
