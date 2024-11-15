@@ -93,12 +93,12 @@ public with sharing class IterationsAssignment {
     public static void deduncyNumber (Integer num){
         /**
          * Write a class in Apex with a method, pass a number as the parameter to the same
-method, and print whether the number is a Dudeney number. A Dudeney number is a positive
-integer that is a perfect cube such that the sum of its digits is equal to the cube root of the
-number.
-For example, 512 is a Dudeney number.
-5 + 1 + 2 = 8
-Cube root of 512 = 8
+        method, and print whether the number is a Dudeney number. A Dudeney number is a positive
+        integer that is a perfect cube such that the sum of its digits is equal to the cube root of the
+        number.
+        For example, 512 is a Dudeney number.
+        5 + 1 + 2 = 8
+        Cube root of 512 = 8
         */
         Decimal sum = 0;
         String numWords = String.valueOf(num);
@@ -114,5 +114,40 @@ Cube root of 512 = 8
         }else{
             System.debug('The number is not a Dudeney number');
         }
+    }
+
+    public static Integer factorial(Integer num){
+        Integer factor = 1;
+        for(integer i = 1; i <= num; i++){
+            factor *= i;
+            //system.debug('factorial is ' + factor);
+        }
+        return factor;
+    }
+    public static void specialNumber(Integer num1, Integer num2){
+        /**
+         
+         * Write a class in Apex with a method, pass two numbers as the parameter to the
+            same method, and create and print a list of all the special numbers between them. A number is
+            said to be a special number if the sum of the factorial of the digits of the number is the same as
+            the original number. For example, 145, because 1! + 4! + 5! = 1 + 24 + 120 = 145.
+        */
+        Integer min = Math.min(num1, num2);
+        Integer max = Math.max(num1, num2);
+        List<Integer> specialNums = new List<Integer>();
+        for(Integer i = min; i <= max; i++){
+            String num = String.valueOf(i);
+            Integer factorialSum = 0;
+            for(integer j = 0; j < num.length(); j++){
+                String currentChar = num.substring(j, j+1);
+                Integer currentNum = Integer.valueOf(currentChar);
+                factorialSum += factorial(currentNum);
+            }
+
+            if(factorialSum == i){
+                specialNums.add(i);
+            }
+        }
+        system.debug('Special numbers are => ' + specialNums);
     }
 }
