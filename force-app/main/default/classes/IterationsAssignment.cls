@@ -150,4 +150,35 @@ public with sharing class IterationsAssignment {
         }
         system.debug('Special numbers are => ' + specialNums);
     }
+
+    public static Integer gettingSquares(Integer num){
+        String wordsNumber = String.valueOf(num);
+        Integer square = 0;
+        for(Integer i = 0; i < wordsNumber.length(); i++){
+            String currentWord = wordsNumber.substring(i, i + 1);
+            Integer currentNumber = Integer.valueOf(currentWord);
+            square += (currentNumber * currentNumber);
+        }
+        return square;
+    }
+    public static void happyNumbers(Integer num){
+        /**
+         * Write a class in Apex with a method, pass a number as the parameter to the same
+            method, and print whether the number is a Happy Number or not. Any positive integer is called
+            a Happy Number, if we repeatedly replace the number, by the sum of the square of its digits
+            till the result becomes 1. If the result is a single-digit number but not 1, then it is not a happy
+            number.
+        */
+        Integer oldnum = num;
+        Set<Integer> seenNumbers = new Set<Integer>();
+        while (num != 1){
+            if(seenNumbers.contains(num)){
+                system.debug('Unhappy number: ' + oldnum);
+            }
+            seenNumbers.add(num);
+            num = gettingSquares(num);
+        }
+
+        System.debug('Happy number: ' + oldnum);
+    }
 }
