@@ -89,4 +89,30 @@ public with sharing class IterationsAssignment {
             System.debug('The number is not an EMIRP number');
         }
     }
+
+    public static void deduncyNumber (Integer num){
+        /**
+         * Write a class in Apex with a method, pass a number as the parameter to the same
+method, and print whether the number is a Dudeney number. A Dudeney number is a positive
+integer that is a perfect cube such that the sum of its digits is equal to the cube root of the
+number.
+For example, 512 is a Dudeney number.
+5 + 1 + 2 = 8
+Cube root of 512 = 8
+        */
+        Decimal sum = 0;
+        String numWords = String.valueOf(num);
+        for(Integer i = 0; i < numWords.length(); i++){
+            String currentWord = numWords.substring(i, i + 1);
+            Decimal currentNumber = (Decimal) Integer.valueOf(currentWord);
+            sum += currentNumber;
+        }
+
+        Decimal cubeRoot = Math.cbrt(num);
+        if(cubeRoot == sum){
+            System.debug('The number is a Dudeney number');
+        }else{
+            System.debug('The number is not a Dudeney number');
+        }
+    }
 }
