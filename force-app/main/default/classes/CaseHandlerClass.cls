@@ -17,5 +17,13 @@ public with sharing class CaseHandlerClass {
         }
     }
 
-    
+    public static void preventDelete(List<Case> casesToDelete){
+        if(!casesToDelete.isEmpty()){
+            for(Case c : casesToDelete){
+                if(c.IsClosed == false){
+                    c.addError('You cannot delete an open case.');
+                }
+            }
+        }
+    }
 }
