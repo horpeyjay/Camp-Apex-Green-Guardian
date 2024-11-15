@@ -181,4 +181,40 @@ public with sharing class IterationsAssignment {
 
         System.debug('Happy number: ' + oldnum);
     }
+
+    
+    public static void disarium(Integer num1, Integer num2) {
+        /**
+         * Write a class in Apex with a method and pass two numbers as the parameter to the
+same method. Create and print a list of all Disarium numbers between them. A number is said
+to be Disarium if the sum of its digits powered with their respective position is equal to the
+original number. For example, 135, because 1(raised to power 1) + 3 (raised to power 2) + 5(raised to power 3) = 135.
+         */
+        // Find the minimum and maximum range
+        Integer min = Math.min(num1, num2);
+        Integer max = Math.max(num1, num2);
+        
+        List<Integer> disariumNumbers = new List<Integer>(); // To store Disarium numbers
+
+        
+        for (Integer i = min; i <= max; i++) {
+            String numberToWord = String.valueOf(i);
+            Double total = 0; // Reset total for each number
+            
+            // Calculate the sum of digits raised to their positions
+            for (Integer j = 0; j < numberToWord.length(); j++) {
+                Integer currentDigit = Integer.valueOf(numberToWord.substring(j, j + 1));
+                total += Math.pow(currentDigit, j + 1); 
+            }
+
+            
+            if (i == total) {
+                disariumNumbers.add(i); 
+            }
+        }
+
+        // Print the list of Disarium numbers
+        System.debug('Disarium numbers between ' + min + ' and ' + max + ': ' + disariumNumbers);
+    }
+    
 }
