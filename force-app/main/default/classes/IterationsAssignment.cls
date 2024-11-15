@@ -40,4 +40,53 @@ public with sharing class IterationsAssignment {
         System.debug(min);
         return min; 
     }
+
+    public static void autoMorphic(Integer num){
+        /**
+         * Write a class in Apex with a method, pass a number as the parameter to the same
+            method, and check if it is an Automorphic Number or not. An automorphic number is a number
+            that is contained in the last digit(s) of its square. For example, 25 is an automorphic number as
+            its square is 625, and 25 is present as the last two digits.
+
+        */
+        Integer squareNumbers = num * num;
+        String square = String.valueOf(squareNumbers);
+        String numWord = String.valueOf(num);
+        String lastDigit = square.right(2);
+        if(numWord == lastDigit){
+            System.debug('It is an automorphic number');
+        }else{
+            System.debug('It is not an automorphic number');
+        
+        }
+    }
+
+    public static Boolean primeNumber(integer num){
+        for(Integer i = 2; i < num; i++){
+            if(Math.mod(num, i) == 0){ 
+                return false;
+                
+            }
+        }
+        return true;
+    }
+    public static void primeemirp(Integer primeNumber){
+        /**
+         * Write a class in Apex with a method, pass a number as the parameter to the same
+            method, and print whether the number is an EMIRP number or not. A number is said to be
+            EMIRP if the number, and it’s reverse both are prime numbers. For example, 13, 17, etc
+        */
+        
+        
+        String numWord = String.valueOf(primeNumber);
+        numWord = numWord.reverse();
+        Integer emirp = Integer.valueOf(numWord);
+        Boolean isPrime = primeNumber(primeNumber);
+        Boolean isEmirp = primeNumber(emirp);
+        if(isPrime == true && isEmirp == true){
+            System.debug('The number is an EMIRP number');
+        }else{
+            System.debug('The number is not an EMIRP number');
+        }
+    }
 }
