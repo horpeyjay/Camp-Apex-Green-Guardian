@@ -54,11 +54,11 @@ public with sharing class Assignment2 {
     public static void stringModification(String str){
         /**
          * Write a class in Apex with a method and accept a String as a parameter of that
-method and display-
-(a) The String Value
-(b) Length of the String
-(c) String in Lowercase
-(d) String in Uppercase
+        method and display-
+        (a) The String Value
+        (b) Length of the String
+        (c) String in Lowercase
+        (d) String in Uppercase
 
          */
         String strValue = (str != null)? str : null;
@@ -356,4 +356,88 @@ method and display-
         return capital;
     }
 
+    public static Boolean canVote(Integer age){
+        if(age >= 18){
+            return true;
+        }
+        return false;
+    }
+
+    public static Boolean isBuzzNumber(Integer num){
+        String numberFromString = String.valueOf(num);
+        if(numberFromString.endsWith('7')){
+            return true;
+        }else if(Math.mod(num, 7) == 0){
+            return true;
+        }
+        return false;
+    }
+
+    public static Decimal grossSalary (Decimal salary){
+        /**
+         * Write a class in Apex with a method, pass the Basic Salary of the user, and calculate
+            and print the gross salary of the user. Gross Salary = Basic Salary + Travel Allowance +
+            Dearness Allowance + House Rent Allowance. If the Basic Salary is greater than or equal to
+            10000, then Travel Allowance is 10% of the Basic Salary and House Rent Allowance is 20%
+            of the Basic Salary. Otherwise, Travel Allowance is 15% of the Basic Salary and House Rent
+            Allowance is 30% of the Basic Salary. Dearness Allowance will be 20% of the Basic Salary
+            for both cases.
+        */
+        Decimal gross, tA, dA, hRA;
+        if(salary >= 10000){
+            tA = salary * 0.10;
+            hRA = salary * 0.20;
+        }else{
+            tA = salary * 0.15;
+            hRA = salary * 0.30;
+        }
+
+        dA = salary * 0.20;
+        gross = salary + tA + dA + hRA;
+        gross = gross.setScale(2);
+        System.debug('Gross Salary of the user is ' + gross);
+        return gross;
+    }
+
+    public static Decimal amountForDistance(Integer km){
+        /**
+         * 
+         * Write a class in Apex with a method, and pass the distance traveled by the user as
+            a parameter to the same method. Calculate and print the amount to pay on the following criteria.
+            Kms Travelled Amount Per Km
+            First 10 Kms Rs. 30/-
+            Next 20 Kms Rs. 25/-
+            Next 40 kms Rs. 20/-
+            Next 70 Kms Rs. 15/-
+
+        */
+        Decimal finalPay;
+        if(km <= 10){
+            finalpay = 30 * km;
+        }else if(km <= 30){
+            finalPay = (30 * 10) + (25 * (km - 10));
+        }else if(km <= 70){
+            finalPay = (30 * 10) + (25 * 20) + (20 * (km - 30));
+        }else if(km <= 140){
+            finalPay = (30 * 10) + (25 * 20) + (20 * 40) + (15 * (km - 70));
+        }else{
+            finalPay = -1;
+        }
+        return finalPay;
+    }
+
+    public static Decimal taxPayable(Decimal grossSalary){
+        Decimal tax;
+        if(grossSalary < 100000){
+            tax = 0;
+        }else if(grossSalary <= 500000){
+            tax = 1000 + ((grossSalary - 100000) * 0.10);
+        }else if(grossSalary <= 800000){
+            tax = 5000 + (400000 * 0.10) + ((grossSalary - 500000) * 0.20);
+        }else{
+            tax = 10000 + (400000 * 0.10) + (300000 * 0.20) + ((grossSalary - 800000) * 0.25);
+        }
+        system.debug('the tax paid is ' + tax);
+        return tax;
+    }
 }
